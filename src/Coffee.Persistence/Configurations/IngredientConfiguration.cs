@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CoffeeEntity = Coffee.Domain.Entities.Coffee;
+using IngredientEntity = Coffee.Domain.Entities.Ingredient;
 
 namespace Coffee.Persistence.Configurations;
 
-public class CoffeeConfiguration : IEntityTypeConfiguration<CoffeeEntity>
+public class IngredientConfiguration : IEntityTypeConfiguration<IngredientEntity>
 {
-    public void Configure(EntityTypeBuilder<CoffeeEntity> builder)
+    public void Configure(EntityTypeBuilder<IngredientEntity> builder)
     {
-        builder.ToTable("Coffees");
+        builder.ToTable("Ingredients");
 
         builder.HasKey(e => e.Id);
         
@@ -17,7 +17,14 @@ public class CoffeeConfiguration : IEntityTypeConfiguration<CoffeeEntity>
 
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(50);
+
+        builder.Property(e => e.Description)
+            .HasMaxLength(200);
+
+        builder.Property(e => e.IsActive)
+            .IsRequired()
+            .HasDefaultValue(true);
 
         builder.Property(e => e.CreatedAt)
             .IsRequired()
@@ -30,16 +37,8 @@ public class CoffeeConfiguration : IEntityTypeConfiguration<CoffeeEntity>
         builder.HasIndex(e => e.Name)
             .IsUnique();
 
+        builder.HasIndex(e => e.IsActive);
         builder.HasIndex(e => e.CreatedAt);
         builder.HasIndex(e => e.UpdatedAt);
-
-        builder.HasOne(e => e.Category)
-            .WithMany(c => c.Coffees)
-            .HasForeignKey(e => e.CategoryId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder.HasMany(e => e.Ingredients)
-            .WithMany(i => i.Coffees)
-            .UsingEntity(j => j.ToTable("CoffeeIngredients"));
     }
 }

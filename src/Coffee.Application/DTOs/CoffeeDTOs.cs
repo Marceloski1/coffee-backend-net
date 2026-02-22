@@ -6,6 +6,9 @@ public class CoffeeDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public Guid? CategoryId { get; set; }
+    public string? CategoryName { get; set; }
+    public List<IngredientDto> Ingredients { get; set; } = new();
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
@@ -15,6 +18,10 @@ public class CreateCoffeeDto
     [Required(ErrorMessage = "El nombre del café es requerido")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 100 caracteres")]
     public string Name { get; set; } = string.Empty;
+
+    public Guid? CategoryId { get; set; }
+
+    public List<Guid>? IngredientIds { get; set; }
 }
 
 public class UpdateCoffeeDto
@@ -22,6 +29,10 @@ public class UpdateCoffeeDto
     [Required(ErrorMessage = "El nombre del café es requerido")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 100 caracteres")]
     public string Name { get; set; } = string.Empty;
+
+    public Guid? CategoryId { get; set; }
+
+    public List<Guid>? IngredientIds { get; set; }
 }
 
 public class CoffeeQueryDto

@@ -2,6 +2,7 @@ using Coffee.Application.Interfaces;
 using Coffee.Application.Services;
 using Coffee.Application.Options;
 using Coffee.Application.Validators;
+using Coffee.Application.DTOs;
 using Coffee.Persistence.Repositories;
 using Coffee.Persistence.Data;
 using Coffee.Persistence.UnitOfWork;
@@ -144,12 +145,16 @@ builder.Services.AddSwaggerGen(options =>
 
 // Dependency Injection - Repositories
 builder.Services.AddScoped<ICoffeeRepository, CoffeeRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 
 // Dependency Injection - Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Dependency Injection - Services
 builder.Services.AddScoped<ICoffeeService, CoffeeService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 
 // FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCoffeeDtoValidator>();
